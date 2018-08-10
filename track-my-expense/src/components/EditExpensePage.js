@@ -1,9 +1,28 @@
 
 import React from 'react';
-const EditExpensePage = () => (
-    <div>
-    Edit Expense component
-    </div>
-);
+import {connect} from 'react-redux';
+import ExpenseForm from './ExpenseForm';
 
-export default EditExpensePage;
+const EditExpensePage = (props) => {
+ 
+return( 
+    <div>
+        <ExpenseForm
+            expense ={props.expense}
+            onSubmit = { (expense) =>{
+                console.log("Dumping");
+                console.log(expense);
+            }}
+            />
+        Editing component with id : {props.match.params.id};
+    </div>
+)};
+
+const mapStateToProps = (state,props) => {
+
+    return {
+
+        expense: state.expenses.find((expense) => expense.id === props.match.params.id)
+    };
+};
+export default connect(mapStateToProps)(EditExpensePage);
